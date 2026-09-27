@@ -1,0 +1,25 @@
+import math
+print("hello user, welcome to my program")
+print()
+print("the purpose of this program is to demonstrate the capabilities of python in the calculations that follow")
+print()
+child_meal_price = float(input("What is the price of a child's meal? "))
+adult_meal_price = float(input("What is the price of an adult's meal? "))
+num_children = int(input("How many children are there? "))
+num_adults = int(input("How many adults are there? "))
+print()
+subtotal = (child_meal_price * num_children) + (adult_meal_price * num_adults)
+print()
+print(f'Subtotal : {subtotal}')
+sales_tax_rate = float(input("What is the sales tax rate? "))
+print(f'$ {sales_tax_rate}')
+print()
+sales_tax = subtotal * sales_tax_rate/100
+new_sales_tax = round(sales_tax, 2)
+print(f'Sales tax: ${new_sales_tax}')
+total = sales_tax + subtotal
+print(total)
+payment_amount = float(input("how much are you making as payment? "))
+print(f'${payment_amount}')
+change = payment_amount - total
+print(f'Your change is : ${change}')
