@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walkerline</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="my.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <a href="#" class="navbar-logo">WALKERLINE</a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <button class="nav-tab active" data-panel="homePanel">Home</button>
+            <button class="nav-tab" data-panel="explorePanel">Explore</button>
+            <button class="nav-tab" data-panel="messagesPanel">Messages</button>
+            <button class="nav-tab" data-panel="profilePanel">Profile</button>
+        </nav>
+        <div class="user-display" id="navUserDisplay">Guest Profile</div>
+    </header>
+
+    <main class="main-layout">
+        <!-- Left sidebar: account and device controls -->
+        <aside class="sidebar">
+            <section class="fb-card" id="accountCard">
+                <h3 class="card-title">Walkerline Account</h3>
+
+                <div id="authSection">
+                    <input type="text" id="usernameInput" placeholder="Choose a display name...">
+                    <input type="email" id="emailInput" placeholder="Email address" autocomplete="email">
+                    <input type="password" id="passwordInput" placeholder="Password (at least 6 characters)" autocomplete="new-password">
+
+                    <button id="signUpBtn" class="fb-btn">Create Account</button>
+                    <button id="loginBtn" class="fb-btn fb-btn-secondary">Log In</button>
+                    <div id="authMessage" class="status-text" aria-live="polite"></div>
+                </div>
+
+                <div id="loggedInSection" hidden>
+                    <div id="accountDisplay" class="status-text"></div>
+
+                    <div class="profile-editor">
+                        <img id="profilePicturePreview"
+                             src="https://placehold.co/120x120?text=Profile"
+                             alt="Your profile picture"
+                             class="profile-picture">
+
+                        <label for="profilePictureInput">Profile picture</label>
+                        <input type="file" id="profilePictureInput" accept="image/*">
+
+                        <div id="cropModal" class="crop-modal" hidden>
+                            <div class="crop-modal-content">
+                                <h3>Crop your profile picture</h3>
+                                <div class="crop-image-container">
+                                    <img id="imageToCrop" alt="Image to crop">
+                                </div>
+                                <div class="crop-controls">
+                                    <button type="button" id="zoomOutBtn">−</button>
+                                    <button type="button" id="zoomInBtn">+</button>
+                                </div>
+                                <div class="crop-actions">
+                                    <button type="button" id="cancelCropBtn">Cancel</button>
+                                    <button type="button" id="applyCropBtn">Use Photo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="saveProfileBtn" class="fb-btn">
+                        Save Profile
+                    </button>
+                    <button id="logoutBtn" class="fb-btn fb-btn-secondary">Log Out</button>
+                </div>
+            </section>
+
+            <section class="fb-card" id="hardwareCard">
+                <h3 class="card-title">Hardware Connectivity</h3>
+                <button id="connectBtn" class="fb-btn fb-btn-secondary">Link BLE Device</button>
+                <div id="status" class="status-text">Status: Offline Anchor</div>
+            </section>
+        </aside>
+
+        <!-- Main content is a sibling of the sidebar, not nested inside it -->
+        <div class="content-panels">
+            <section class="content-panel active" id="homePanel">
+                <div class="nested-tabs">
+                    <button class="nested-tab active" data-subpanel="feedView">Feed</button>
+                    <button class="nested-tab" data-subpanel="followingView">Following</button>
+                </div>
+
+                <div class="nested-panel active" id="feedView">
+                    <div class="feed-container">
+                        <section class="fb-card">
+                            <textarea id="postInput" placeholder="What's on your mind?"></textarea>
+                            <button id="publishPostBtn" class="fb-btn">Publish to Stream</button>
+                        </section>
+
+                        <div id="newsfeedStream">
+                            <article class="fb-card feed-post">
+                                <div class="post-header">
+                                    <div class="avatar">SYS</div>
+                                    <div>
+                                        <div class="post-author">Global System Feed</div>
+                                        <div class="post-time">Just Now</div>
+                                    </div>
+                                </div>
+                                <div class="post-body">Welcome to the decentralized hardware grid! Connect your identity asset card and broadcast telemetry streams seamlessly.</div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nested-panel" id="followingView">
+                    <section class="fb-card">
+                        <h3 class="card-title">Following</h3>
+                        <p>Posts from people you follow will appear here.</p>
+                    </section>
+                </div>
+            </section>
+
+            <section class="content-panel" id="explorePanel">
+                <div class="nested-tabs">
+                    <button class="nested-tab active" data-subpanel="discoverView">Discover</button>
+                    <button class="nested-tab" data-subpanel="trendingView">Trending</button>
+                </div>
+                <div class="nested-panel active" id="discoverView">
+                    <section class="fb-card">
+                        <h3 class="card-title">Discover</h3>
+                        <p>Find new people and content on Walkerline.</p>
+                    </section>
+                </div>
+                <div class="nested-panel" id="trendingView">
+                    <section class="fb-card">
+                        <h3 class="card-title">Trending</h3>
+                        <p>Popular posts and conversations will appear here.</p>
+                    </section>
+                </div>
+            </section>
+
+            <section class="content-panel" id="messagesPanel">
+                <div class="nested-tabs">
+                    <button class="nested-tab active" data-subpanel="inboxView">Inbox</button>
+                    <button class="nested-tab" data-subpanel="requestsView">Requests</button>
+                </div>
+                <div class="nested-panel active" id="inboxView">
+                    
+<section class="fb-card">
+    <h3 class="card-title">Inbox</h3>
+
+    <div class="messages-layout">
+        <aside class="conversation-list">
+            <h4>Conversations</h4>
+            <div id="conversationsList">
+                <p>Your conversations will appear here.</p>
+            </div>
+        </aside>
+
+        <div class="chat-window">
+            <div class="chat-header" id="chatHeader">
+                <h4>Select a conversation</h4>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <p>Select a person to start chatting.</p>
+            </div>
+
+            <form id="messageForm" class="message-form">
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="Write a message..."
+                    autocomplete="off"
+                    disabled
+                >
+                <button type="submit" id="sendMessageBtn" disabled>
+                    Send
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+                </div>
+                <div class="nested-panel" id="requestsView">
+                    <section class="fb-card">
+                        <h3 class="card-title">Message Requests</h3>
+                        <div id="messageRequestsList">
+                            <p>Loading message requests...</p>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="content-panel" id="profilePanel">
+                <div class="nested-tabs">
+                    <button class="nested-tab active" data-subpanel="profilePostsView">Posts</button>
+                    <button class="nested-tab" data-subpanel="aboutView">About</button>
+                    <button class="nested-tab" data-subpanel="photosView">Photos</button>
+                </div>
+                <div class="nested-panel active" id="profilePostsView">
+    <section class="fb-card profile-header-card">
+        <img
+            id="viewedProfilePicture"
+            class="profile-picture"
+            src="https://placehold.co/120x120?text=Profile"
+            alt="Profile picture"
+        >
+
+        <h2 id="viewedProfileName">Your Profile</h2>
+        <p id="viewedProfileBio">No bio added yet.</p>
+
+        <div class="profile-stats">
+            <span id="viewedFollowerCount">0 followers</span>
+            <span id="viewedFollowingCount">0 following</span>
+        </div>
+
+        <button id="viewedFollowBtn" class="fb-btn fb-btn-secondary" hidden>
+            Follow
+        </button>
+    </section>
+
+    <section class="fb-card">
+        <h3 class="card-title">Posts</h3>
+        <div id="viewedProfilePosts">
+            <p>Select a profile to view posts.</p>
+        </div>
+    </section>
+</div>
+                <div class="nested-panel" id="aboutView">
+                    <section class="fb-card">
+                        <h3 class="card-title">About Me</h3>
+                        <label for="bioInput">Your bio</label>
+                        <textarea id="bioInput" maxlength="160" placeholder="Tell people a little about yourself..."></textarea>
+                        <div id="bioCounter">0/160 characters</div>
+                    </section>
+                </div>
+                <div class="nested-panel" id="photosView">
+                    <section class="fb-card">
+                        <h3 class="card-title">My Photos</h3>
+                        <p>Your shared photos will appear here.</p>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
+    <script src="dapp.js"></script>
+</body>
+</html>
